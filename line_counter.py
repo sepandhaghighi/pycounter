@@ -1,6 +1,7 @@
 import os
 import datetime
 import platform
+import string
 def dash_print(file  , length): # this function is for printing dash in the txt file 
     for i in range(length):
         file.write("-")
@@ -8,12 +9,12 @@ def dash_print(file  , length): # this function is for printing dash in the txt 
 def show(code_list): # this function print output
     for i in code_list:
         print(i)
-def find_directory(folder_list,direct='.\\'): # a function for finding hierarchical folders
+def find_directory(folder_list,direct='./'): # a function for finding hierarchical folders
     folder=os.listdir(direct) # get list directory of folders
     sub_folder_list=[] # empty folder
     for i in range(len(folder)): # this for find sub folder
         if folder[i].find(".")==-1:
-            sub_folder_list.append(direct+".\\"+folder[i]+"\\")
+            sub_folder_list.append(direct+"./"+folder[i]+"/")
     folder_list.extend(sub_folder_list) # update master folder list
     for item in range(len(sub_folder_list)): # run again find_directory for sub folders
         find_directory(folder_list,sub_folder_list[item])
@@ -21,8 +22,20 @@ def start_up(version):
     print("Pycounter By Sepand Haghighi , Version : "+version)
     print("Operating System :"+platform.system())
 #---------------------------------------------------------------------------------------
+def comment(line):
+    index=line.find("#")
+    if index!=-1:
+        sub_line=line[:index]
+        for i in sub_line:
+            if i in string.ascii_letters or i in string.punctuation:
+                return False
+                break
+        return True
+    else:
+        return False
+    
 def main():
-    folder_list=['.\\'] # create master folder_list
+    folder_list=['./'] # create master folder_list
     find_directory(folder_list) # run find_drectory
     file=open("line_log.txt","a") # open a txt file for log as appending
     line_length=0
@@ -36,7 +49,7 @@ def main():
                 c_file=open(folder_list[j]+folder[i],"r")
                 counter=counter+1
                 for line in c_file:
-                    if len(line)>1 :
+                    if len(line)>1 and comment(line)==False :
                         line_length=line_length+1
                 if counter>0:
                     file.write(str(counter)+"-"+folder[i]+" : "+str(line_length)+"\t"+str(folder_list[j])+"\n") # update txt log
@@ -51,11 +64,9 @@ def main():
     print("Total Lines : " +str(total))
 if (__name__=="__main__"):
     version="1.0.0"
-    try:
-        start_up(version)
-        main()
-    except:
-        print("Something Wrong")
+    start_up(version)
+    main()
+    #print("Something Wrong")
     
 
             
