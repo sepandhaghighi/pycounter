@@ -1,5 +1,6 @@
 import os
 import datetime
+import platform
 def dash_print(file  , length): # this function is for printing dash in the txt file 
     for i in range(length):
         file.write("-")
@@ -16,6 +17,9 @@ def find_directory(folder_list,direct='.\\'): # a function for finding hierarchi
     folder_list.extend(sub_folder_list) # update master folder list
     for item in range(len(sub_folder_list)): # run again find_directory for sub folders
         find_directory(folder_list,sub_folder_list[item])
+def start_up(version):
+    print("Pycounter By Sepand Haghighi , Version : "+version)
+    print("Operating System :"+platform.system())
 #---------------------------------------------------------------------------------------
 def main():
     folder_list=['.\\'] # create master folder_list
@@ -46,8 +50,12 @@ def main():
     show(print_list)
     print("Total Lines : " +str(total))
 if (__name__=="__main__"):
-
-    main()
+    version="1.0.0"
+    try:
+        start_up(version)
+        main()
+    except:
+        print("Something Wrong")
     
 
             
