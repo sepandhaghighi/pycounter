@@ -33,7 +33,12 @@ def comment(line):
         return True
     else:
         return False
-    
+def get_input():
+    input_string=input(" Ignore Comment[1] Or Not[2]")
+    if int(input_string)==1:
+        return True
+    else:
+        return False
 def main():
     folder_list=['./'] # create master folder_list
     find_directory(folder_list) # run find_drectory
@@ -42,6 +47,7 @@ def main():
     print_list=[]
     total=0
     counter=0
+    ignore=get_input()
     for j in range(len(folder_list)): # find each python files in each direction and count lines
         folder=os.listdir(folder_list[j])
         for i in range(len(folder)):
@@ -49,8 +55,12 @@ def main():
                 c_file=open(folder_list[j]+folder[i],"r")
                 counter=counter+1
                 for line in c_file:
-                    if len(line)>1 and comment(line)==False :
-                        line_length=line_length+1
+                    if ignore==True:
+                        if len(line)>1 and comment(line)==False :
+                            line_length=line_length+1
+                    else:
+                        if len(line)>1:
+                            line_length=line_length+1
                 if counter>0:
                     file.write(str(counter)+"-"+folder[i]+" : "+str(line_length)+"\t"+str(folder_list[j])+"\n") # update txt log
                     print_list.append(str(counter)+"-"+folder[i]+" : "+str(line_length)+"\t"+str(folder_list[j])) # update output list
