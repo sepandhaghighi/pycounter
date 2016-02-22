@@ -51,7 +51,7 @@ def main():
     for j in range(len(folder_list)): # find each python files in each direction and count lines
         folder=os.listdir(folder_list[j])
         for i in range(len(folder)):
-            if folder[i].find(".py")!=-1 and folder[i]!="line_counter.py" and folder[i].find(".pyd")==-1:
+            if folder[i].find(".py")!=-1 and folder[i]!="line_counter.py" and folder[i][-1].lower()=="y":
                 c_file=open(folder_list[j]+folder[i],"r")
                 counter=counter+1
                 for line in c_file:
@@ -76,6 +76,7 @@ if (__name__=="__main__"):
     version="1.0.0"
     start_up(version)
     main()
+    input()
     #print("Something Wrong")
     
 
